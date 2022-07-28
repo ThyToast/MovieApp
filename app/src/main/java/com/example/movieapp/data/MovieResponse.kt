@@ -16,7 +16,7 @@ object MovieResponse {
         @field:Json(name = "poster_path")
         val posterPath: String?,
         @field:Json(name = "id")
-        val id: String,
+        val id: Int,
         @field:Json(name = "title")
         val title: String,
         @field:Json(name = "popularity")
@@ -30,7 +30,7 @@ object MovieResponse {
         @field:Json(name = "overview")
         val overview: String,
         @field:Json(name = "id")
-        val id: String,
+        val id: Int,
         @field:Json(name = "title")
         val title: String,
         @field:Json(name = "popularity")
@@ -38,14 +38,14 @@ object MovieResponse {
         @field:Json(name = "original_language")
         val originalLanguage: String,
         @field:Json(name = "genres")
-        val genres: String,
+        val genres: ArrayList<MovieGenre>,
         @field:Json(name = "runtime")
         val runtime: String,
     )
 
     data class MovieGenre(
         @field:Json(name = "id")
-        val id: String,
+        val id: Int,
         @field:Json(name = "name")
         val name: String,
     )
