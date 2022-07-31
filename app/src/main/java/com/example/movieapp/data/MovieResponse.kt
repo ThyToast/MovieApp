@@ -9,9 +9,10 @@ object MovieResponse {
         @field:Json(name = "page")
         val page: Int,
         @field:Json(name = "results")
-        val results: ArrayList<MovieResult>,
+        val results: List<MovieResult>,
     )
 
+    @JsonClass(generateAdapter = true)
     data class MovieResult(
         @field:Json(name = "poster_path")
         val posterPath: String?,
@@ -38,11 +39,12 @@ object MovieResponse {
         @field:Json(name = "original_language")
         val originalLanguage: String,
         @field:Json(name = "genres")
-        val genres: ArrayList<MovieGenre>,
+        val genres: List<MovieGenre>,
         @field:Json(name = "runtime")
         val runtime: String,
     )
 
+    @JsonClass(generateAdapter = true)
     data class MovieGenre(
         @field:Json(name = "id")
         val id: Int,

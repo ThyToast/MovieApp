@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "https://api.themoviedb.org"
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
     // HTTP interceptor used to debug API calls easily
     // Token interceptor to add key without having to repeat it during API calls
 
@@ -26,13 +26,13 @@ object NetworkModule {
     fun provideMovieApi(): MovieService {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
+            .baseUrl(BASE_URL)
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor(TokenInterceptor())
-                    .addInterceptor(HttpLoggingInterceptor())
+                    .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
                     .build()
             )
-            .baseUrl(BASE_URL)
             .build()
             .create(MovieService::class.java)
     }

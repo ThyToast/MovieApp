@@ -7,12 +7,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieService {
-    @GET("/discover/movie")
+    @GET("discover/movie")
     suspend fun getMovieList(
         @Query("sort_by") sortBy: String
     ): Response<MovieResponse.DiscoverMovie>
 
-    @GET("/movie/{movie_id}")
+    @GET("movie/{movie_id}")
     suspend fun getMovieDetail(
         @Path("movie_id") movieId: Int
     ): Response<MovieResponse.MovieDetail>
