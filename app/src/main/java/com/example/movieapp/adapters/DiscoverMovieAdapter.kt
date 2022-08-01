@@ -18,7 +18,7 @@ class DiscoverMovieAdapter(
         item = list
     }
 
-    class Viewholder(val binding: ItemMovieDiscoverBinding) :
+    class Viewholder(private val binding: ItemMovieDiscoverBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieResponse.MovieResult) {
             binding.tvTitle.text = movie.title
