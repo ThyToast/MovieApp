@@ -50,7 +50,7 @@ class DetailsFragment : Fragment() {
         viewModel.movieDetailRes.observe(viewLifecycleOwner) {
             binding.tvTitle.text = it.title
             binding.tvLanguage.text = it.originalLanguage.uppercase()
-            binding.tvDuration.text = it.runtime
+            binding.tvDuration.text = it.runtime + " minutes"
             binding.tvSynopsis.text = it.overview
             Glide.with(requireContext())
                 .load("https://image.tmdb.org/t/p/original" + it.posterPath)
