@@ -2,14 +2,15 @@ package com.example.movieapp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.MovieResponse
 import com.example.movieapp.databinding.ItemMovieDiscoverBinding
+import com.example.movieapp.ui.HomeFragmentDirections
 
 class DiscoverMovieAdapter(
-    private val action: () -> Unit = {}
 ) : RecyclerView.Adapter<DiscoverMovieAdapter.Viewholder>() {
     private var item: List<MovieResponse.MovieResult> = ArrayList()
 
@@ -24,11 +25,21 @@ class DiscoverMovieAdapter(
             binding.cpScore.text = String.format(
                 "%.2f", movie.popularity
             )
+
+            // Done to prevent error from loading null images
             if (movie.posterPath != null) {
                 Glide.with(binding.ivMoviePoster.context)
                     .load("https://image.tmdb.org/t/p/original" + movie.posterPath)
-                    .placeholder(R.drawable.ic_launcher_background)
                     .into(binding.ivMoviePoster)
+            } else {
+                Glide.with(binding.ivMoviePoster.context)
+                    .load(R.drawable.ic_launcher_background)
+                    .into(binding.ivMoviePoster)
+            }
+
+            binding.cvMovieCard.setOnClickListener {
+                it.findNavController()
+                    .navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment(movie.id))
             }
         }
     }

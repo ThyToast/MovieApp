@@ -20,6 +20,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
+    private var searchFilter = filterValues[3]
 
     private lateinit var movieAdapter: DiscoverMovieAdapter
 
@@ -29,7 +30,7 @@ class HomeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        viewModel.getDiscoverMovieData()
+        viewModel.getDiscoverMovieData(searchFilter)
         return binding.root
     }
 
@@ -37,16 +38,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieFilter = arrayOf("By Letter", "By Date")
         binding.fabFilterMovie.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Filter Movie")
                 .setSingleChoiceItems(
                     movieFilter, 0
                 ) { dialog, which ->
-                    {
-                        // dialog onClick()
-                    }
+                    searchFilter = filterValues[which]
+                    viewModel.getDiscoverMovieData(searchFilter)
+                    dialog.dismiss()
                 }
                 .setNegativeButton("Cancel") { _, _ -> }
                 .show()
@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.swRefreshMovie.setOnRefreshListener {
-            viewModel.getDiscoverMovieData()
+            viewModel.getDiscoverMovieData(searchFilter)
         }
 
         viewModel.discoverMovieRes.observe(viewLifecycleOwner) {
@@ -77,4 +77,23 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    companion object {
+        private val movieFilter: Array<String> = arrayOf(
+            "By popularity (Ascending)",
+            "By popularity (Descending)",
+            "By release date (Ascending)",
+            "By release date (Descending)",
+            "By alphabetical order (Ascending)",
+            "By alphabetical order (Descending)",
+        )
+
+        private val filterValues: Array<String> = arrayOf(
+            "popularity.asc",
+            "popularity.desc",
+            "release_date.asc",
+            "release_date.desc",
+            "original_title.asc",
+            "original_title.desc",
+        )
+    }
 }
