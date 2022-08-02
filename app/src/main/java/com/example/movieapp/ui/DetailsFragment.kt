@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.movieapp.R
 import com.example.movieapp.adapters.MovieGenreAdapter
 import com.example.movieapp.databinding.FragmentDetailsBinding
 import com.example.movieapp.viewmodel.DetailsViewModel
@@ -52,10 +53,18 @@ class DetailsFragment : Fragment() {
             binding.tvLanguage.text = it.originalLanguage.uppercase()
             binding.tvDuration.text = it.runtime + " minutes"
             binding.tvSynopsis.text = it.overview
-            Glide.with(requireContext())
-                .load("https://image.tmdb.org/t/p/original" + it.posterPath)
-                .into(binding.ivMoviePoster)
-            it.genres?.let { genre -> movieAdapter.updateList(genre) }
+
+            if (it.posterPath.isNotBlank()) {
+                Glide.with(binding.ivMoviePoster.context)
+                    .load("https://image.tmdb.org/t/p/original" + it.posterPath)
+                    .into(binding.ivMoviePoster)
+            } else {
+                Glide.with(binding.ivMoviePoster.context)
+                    .load(R.drawable.ic_launcher_background)
+                    .into(binding.ivMoviePoster)
+            }
+
+            it.genres.let { genre -> movieAdapter.updateList(genre) }
             movieAdapter.notifyDataSetChanged()
         }
     }

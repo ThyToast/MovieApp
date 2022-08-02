@@ -2,27 +2,29 @@ package com.example.movieapp.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.adapters.DiscoverMovieAdapter
+import com.example.movieapp.data.MovieResponse
 import com.example.movieapp.databinding.FragmentHomeBinding
 import com.example.movieapp.viewmodel.HomeViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), DiscoverMovieAdapter.OnMovieListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
     private var searchFilter = filterValues[3]
 
     private lateinit var movieAdapter: DiscoverMovieAdapter
+    private lateinit var movieResult: List<MovieResponse.MovieResult>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +56,7 @@ class HomeFragment : Fragment() {
 
         binding.rvMovies.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            movieAdapter = DiscoverMovieAdapter()
+            movieAdapter = DiscoverMovieAdapter(this@HomeFragment)
             adapter = movieAdapter
             isNestedScrollingEnabled = false
         }
@@ -65,10 +67,9 @@ class HomeFragment : Fragment() {
 
         viewModel.discoverMovieRes.observe(viewLifecycleOwner) {
             // limits the amount of movies for performance
-            val response = it.results?.take(20)
-            if (response != null) {
-                movieAdapter.updateList(response)
-            }
+            val response = it.results.take(20)
+            movieResult = response
+            movieAdapter.updateList(response)
             movieAdapter.notifyDataSetChanged()
             binding.swRefreshMovie.isRefreshing = false
         }
@@ -97,5 +98,14 @@ class HomeFragment : Fragment() {
             "original_title.asc",
             "original_title.desc",
         )
+    }
+
+    override fun onMovieClick(position: Int) {
+        if (movieResult != null) {
+            this.findNavController()
+                .navigate(
+                    HomeFragmentDirections.actionHomeFragmentToDetailsFragment(movieResult[position].id)
+                )
+        }
     }
 }

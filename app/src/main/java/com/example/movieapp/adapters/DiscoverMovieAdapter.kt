@@ -1,17 +1,16 @@
 package com.example.movieapp.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.MovieResponse
 import com.example.movieapp.databinding.ItemMovieDiscoverBinding
-import com.example.movieapp.ui.HomeFragmentDirections
 
-class DiscoverMovieAdapter(
-) : RecyclerView.Adapter<DiscoverMovieAdapter.Viewholder>() {
+class DiscoverMovieAdapter(private val onMovieListener: OnMovieListener) :
+    RecyclerView.Adapter<DiscoverMovieAdapter.Viewholder>() {
     private var item: List<MovieResponse.MovieResult> = ArrayList()
 
     fun updateList(list: List<MovieResponse.MovieResult>) {
@@ -19,15 +18,17 @@ class DiscoverMovieAdapter(
     }
 
     class Viewholder(private val binding: ItemMovieDiscoverBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieResponse.MovieResult) {
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+        private lateinit var onMovieListener: OnMovieListener
+
+        fun bind(movie: MovieResponse.MovieResult, onMovieListener: OnMovieListener) {
             binding.tvTitle.text = movie.title
             binding.cpScore.text = String.format(
                 "%.2f", movie.popularity
             )
 
             // Done to prevent error from loading null images
-            if (movie.posterPath.isNotEmpty()) {
+            if (movie.posterPath.isNotBlank()) {
                 Glide.with(binding.ivMoviePoster.context)
                     .load("https://image.tmdb.org/t/p/original" + movie.posterPath)
                     .into(binding.ivMoviePoster)
@@ -37,12 +38,12 @@ class DiscoverMovieAdapter(
                     .into(binding.ivMoviePoster)
             }
 
-            binding.cvMovieCard.setOnClickListener { view ->
-                movie.id?.let {
-                    view.findNavController()
-                        .navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it))
-                }
-            }
+            this.onMovieListener = onMovieListener
+            binding.cvMovieCard.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View?) {
+            onMovieListener.onMovieClick(adapterPosition)
         }
     }
 
@@ -61,6 +62,10 @@ class DiscoverMovieAdapter(
     }
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
-        holder.bind(item[position])
+        holder.bind(item[position], onMovieListener)
+    }
+
+    interface OnMovieListener {
+        fun onMovieClick(position: Int)
     }
 }
