@@ -27,7 +27,7 @@ class DiscoverMovieAdapter(
             )
 
             // Done to prevent error from loading null images
-            if (movie.posterPath != null) {
+            if (movie.posterPath.isNotEmpty()) {
                 Glide.with(binding.ivMoviePoster.context)
                     .load("https://image.tmdb.org/t/p/original" + movie.posterPath)
                     .into(binding.ivMoviePoster)
@@ -37,9 +37,11 @@ class DiscoverMovieAdapter(
                     .into(binding.ivMoviePoster)
             }
 
-            binding.cvMovieCard.setOnClickListener {
-                it.findNavController()
-                    .navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment(movie.id))
+            binding.cvMovieCard.setOnClickListener { view ->
+                movie.id?.let {
+                    view.findNavController()
+                        .navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it))
+                }
             }
         }
     }

@@ -65,8 +65,10 @@ class HomeFragment : Fragment() {
 
         viewModel.discoverMovieRes.observe(viewLifecycleOwner) {
             // limits the amount of movies for performance
-            val response = it.results.take(20)
-            movieAdapter.updateList(response)
+            val response = it.results?.take(20)
+            if (response != null) {
+                movieAdapter.updateList(response)
+            }
             movieAdapter.notifyDataSetChanged()
             binding.swRefreshMovie.isRefreshing = false
         }

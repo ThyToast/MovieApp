@@ -55,7 +55,7 @@ class DetailsFragment : Fragment() {
             Glide.with(requireContext())
                 .load("https://image.tmdb.org/t/p/original" + it.posterPath)
                 .into(binding.ivMoviePoster)
-            movieAdapter.updateList(it.genres)
+            it.genres?.let { genre -> movieAdapter.updateList(genre) }
             movieAdapter.notifyDataSetChanged()
         }
     }
