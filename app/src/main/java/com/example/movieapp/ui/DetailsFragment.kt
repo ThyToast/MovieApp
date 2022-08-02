@@ -55,11 +55,11 @@ class DetailsFragment : Fragment() {
             binding.tvSynopsis.text = it.overview
 
             if (it.posterPath.isNotBlank()) {
-                Glide.with(binding.ivMoviePoster.context)
+                Glide.with(requireContext())
                     .load("https://image.tmdb.org/t/p/original" + it.posterPath)
                     .into(binding.ivMoviePoster)
             } else {
-                Glide.with(binding.ivMoviePoster.context)
+                Glide.with(requireContext())
                     .load(R.drawable.ic_launcher_background)
                     .into(binding.ivMoviePoster)
             }

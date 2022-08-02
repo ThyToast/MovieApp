@@ -9,7 +9,7 @@ import com.example.movieapp.R
 import com.example.movieapp.data.MovieResponse
 import com.example.movieapp.databinding.ItemMovieDiscoverBinding
 
-class DiscoverMovieAdapter(private val onMovieListener: OnMovieListener) :
+class DiscoverMovieAdapter(private val listener: OnMovieListener) :
     RecyclerView.Adapter<DiscoverMovieAdapter.Viewholder>() {
     private var item: List<MovieResponse.MovieResult> = ArrayList()
 
@@ -17,11 +17,10 @@ class DiscoverMovieAdapter(private val onMovieListener: OnMovieListener) :
         item = list
     }
 
-    class Viewholder(private val binding: ItemMovieDiscoverBinding) :
+    inner class Viewholder(private val binding: ItemMovieDiscoverBinding) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-        private lateinit var onMovieListener: OnMovieListener
 
-        fun bind(movie: MovieResponse.MovieResult, onMovieListener: OnMovieListener) {
+        fun bind(movie: MovieResponse.MovieResult) {
             binding.tvTitle.text = movie.title
             binding.cpScore.text = String.format(
                 "%.2f", movie.popularity
@@ -38,12 +37,11 @@ class DiscoverMovieAdapter(private val onMovieListener: OnMovieListener) :
                     .into(binding.ivMoviePoster)
             }
 
-            this.onMovieListener = onMovieListener
             binding.cvMovieCard.setOnClickListener(this)
         }
 
         override fun onClick(view: View?) {
-            onMovieListener.onMovieClick(adapterPosition)
+            listener.onMovieClick(adapterPosition)
         }
     }
 
@@ -62,7 +60,7 @@ class DiscoverMovieAdapter(private val onMovieListener: OnMovieListener) :
     }
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
-        holder.bind(item[position], onMovieListener)
+        holder.bind(item[position])
     }
 
     interface OnMovieListener {
