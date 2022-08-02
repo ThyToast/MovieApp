@@ -15,7 +15,10 @@ The diagram below is a diagram representation of the application.
 ![alt text](https://i.imgur.com/oYUSU2b.png)
 
 ## Features
-This app features UI binding using **View Binding** and **Navigation Components** to pass data and transfer between different fragments as well as a **Swiperefreshlayout** to refresh the page.
+- This app features UI binding using **View Binding**.
+- **Navigation Components** to pass data and transfer between different fragments.
+- **Swiperefreshlayout** to refresh the page.
+- A **Webview** to open the booking website.
 
 
 ## Usage
