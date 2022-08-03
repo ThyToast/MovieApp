@@ -22,7 +22,7 @@ The diagram below is a diagram representation of the application.
 - **LiveData** to pass data between View and ViewModels
 - **Coroutines** for state management
 - **Retrofit2** for retrieving and sending JSON data for REST APIs
-- **Material3** UI library
+- **Material Design 3** UI library
 
 ## Usage
 Simply pull the repository into your project folder using Git or with Android Studio's Git GUI and run it.
