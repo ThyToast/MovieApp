@@ -16,10 +16,13 @@ The diagram below is a diagram representation of the application.
 
 ## Features
 - This app features UI binding using **View Binding**.
-- **Navigation Components** to pass data and transfer between different fragments.
+- **Navigation Components** to pass data and navigate between different fragments.
 - **Swiperefreshlayout** to refresh the page.
-- A **Webview** to open the booking website.
-
+- **Webview** to open the booking website.
+- **LiveData** to pass data between View and ViewModels
+- **Coroutines** for state management
+- **Retrofit2** for retrieving and sending JSON data for REST APIs
+- **Material3** UI library
 
 ## Usage
 Simply pull the repository into your project folder using Git or with Android Studio's Git GUI and run it.
