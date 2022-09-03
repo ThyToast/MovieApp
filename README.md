@@ -1,4 +1,4 @@
-# Fave Assessment - Movie App
+# Movie App
 
 This movie app demonstrates my interpretation of Android development best practices based on the requirements provided.
 
