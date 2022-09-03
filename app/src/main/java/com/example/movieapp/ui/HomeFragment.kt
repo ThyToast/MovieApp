@@ -5,40 +5,34 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.adapters.DiscoverMovieAdapter
 import com.example.movieapp.data.MovieResponse
+import com.example.movieapp.data.MovieSelection.filterValues
+import com.example.movieapp.data.MovieSelection.movieFilter
 import com.example.movieapp.databinding.FragmentHomeBinding
+import com.example.movieapp.ui.base.BaseFragment
 import com.example.movieapp.viewmodel.HomeViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), DiscoverMovieAdapter.OnMovieListener {
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), DiscoverMovieAdapter.OnMovieListener {
     private val viewModel: HomeViewModel by viewModels()
     private var searchFilter = filterValues[3]
+    private var movieResult: List<MovieResponse.MovieResult> = emptyList()
 
     private lateinit var movieAdapter: DiscoverMovieAdapter
-    private lateinit var movieResult: List<MovieResponse.MovieResult>
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        viewModel.getDiscoverMovieData(searchFilter)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
+        get() = FragmentHomeBinding::inflate
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getDiscoverMovieData(searchFilter)
 
         binding.fabFilterMovie.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
@@ -75,33 +69,8 @@ class HomeFragment : Fragment(), DiscoverMovieAdapter.OnMovieListener {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    companion object {
-        private val movieFilter: Array<String> = arrayOf(
-            "By popularity (Ascending)",
-            "By popularity (Descending)",
-            "By release date (Ascending)",
-            "By release date (Descending)",
-            "By alphabetical order (Ascending)",
-            "By alphabetical order (Descending)",
-        )
-
-        private val filterValues: Array<String> = arrayOf(
-            "popularity.asc",
-            "popularity.desc",
-            "release_date.asc",
-            "release_date.desc",
-            "original_title.asc",
-            "original_title.desc",
-        )
-    }
-
     override fun onMovieClick(position: Int) {
-        if (movieResult != null) {
+        if (movieResult.isNotEmpty()) {
             this.findNavController()
                 .navigate(
                     HomeFragmentDirections.actionHomeFragmentToDetailsFragment(movieResult[position].id)
