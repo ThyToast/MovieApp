@@ -1,14 +1,13 @@
 package com.example.movieapp.presentation
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.movieapp.R
+import android.view.LayoutInflater
+import com.example.movieapp.databinding.ActivityMainBinding
+import com.example.movieapp.presentation.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivityMainBinding
+        get() = ActivityMainBinding::inflate
 }
