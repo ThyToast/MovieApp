@@ -1,6 +1,6 @@
 package com.example.movieapp.data
 
-import com.example.movieapp.api.MovieService
+import com.example.movieapp.data.network.MovieService
 import retrofit2.Response
 import javax.inject.Inject
 

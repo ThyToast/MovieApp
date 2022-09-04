@@ -1,9 +1,7 @@
-package com.example.movieapp
+package com.example.movieapp.presentation
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MainApplication : Application() {
-
-}
+class MainApplication : Application()

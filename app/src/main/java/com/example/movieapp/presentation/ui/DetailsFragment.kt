@@ -1,4 +1,4 @@
-package com.example.movieapp.ui
+package com.example.movieapp.presentation.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -11,11 +11,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
-import com.example.movieapp.adapters.MovieGenreAdapter
+import com.example.movieapp.presentation.adapters.MovieGenreAdapter
 import com.example.movieapp.data.MovieSelection.movieImageUrl
 import com.example.movieapp.databinding.FragmentDetailsBinding
-import com.example.movieapp.ui.base.BaseFragment
-import com.example.movieapp.viewmodel.DetailsViewModel
+import com.example.movieapp.presentation.ui.base.BaseFragment
+import com.example.movieapp.presentation.viewmodel.DetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

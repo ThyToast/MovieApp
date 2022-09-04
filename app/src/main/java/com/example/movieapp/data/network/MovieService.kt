@@ -1,4 +1,4 @@
-package com.example.movieapp.api
+package com.example.movieapp.data.network
 
 import com.example.movieapp.data.MovieResponse
 import retrofit2.Response

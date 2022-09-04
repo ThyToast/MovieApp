@@ -1,4 +1,4 @@
-package com.example.movieapp.ui
+package com.example.movieapp.presentation.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.movieapp.adapters.DiscoverMovieAdapter
 import com.example.movieapp.data.MovieResponse
 import com.example.movieapp.data.MovieSelection.filterValues
 import com.example.movieapp.data.MovieSelection.movieFilter
 import com.example.movieapp.databinding.FragmentHomeBinding
-import com.example.movieapp.ui.base.BaseFragment
-import com.example.movieapp.viewmodel.HomeViewModel
+import com.example.movieapp.presentation.adapters.DiscoverMovieAdapter
+import com.example.movieapp.presentation.ui.base.BaseFragment
+import com.example.movieapp.presentation.viewmodel.HomeViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 

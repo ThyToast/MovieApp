@@ -1,7 +1,7 @@
 package com.example.movieapp.di
 
 import com.example.movieapp.BuildConfig
-import com.example.movieapp.api.MovieService
+import com.example.movieapp.data.network.MovieService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
